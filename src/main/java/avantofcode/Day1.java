@@ -10,9 +10,7 @@ import java.util.Scanner;
  */
 public class Day1 {
     private Scanner sc;
-    
     private int[] items;
-
     private File file;
 
     public Day1() {
@@ -20,21 +18,29 @@ public class Day1 {
 
     public void run() {
         file = new File("input");
-        int cont = 1;
+        String line;
+        int cont = 0;
         
-        try {
-            sc = new Scanner(file);
-        } catch (FileNotFoundException e) {
-            System.out.println(e);
-        }
+        sc = newScanner(sc, file);
         
         while (sc.hasNextLine()) {
             sc.nextLine();
             cont++;
         }
         
-        System.out.println("Lines: " + cont);
+        items = new int[cont];
         
+        sc = newScanner(sc, file);
+
+        for (int i = 0; i < cont; i++) {
+            line = sc.nextLine();
+            
+            if (line.equals("")) {
+                items[i] = 0;
+            } else {
+                items[i] = Integer.parseInt(line);
+            }
+        }
         System.out.println("Most calories carried by an elf: " + calories());
     }
     
@@ -68,5 +74,15 @@ public class Day1 {
         System.out.println("Elf carrying the most calories: " + highestCalElf);
         
         return highestCal;
+    }
+    
+    public Scanner newScanner(Scanner scanner, File file) {
+        try {
+            scanner = new Scanner(file);
+        } catch (FileNotFoundException e) {
+            System.out.println(e);
+        }
+        
+        return scanner;
     }
 }
