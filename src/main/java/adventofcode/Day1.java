@@ -16,11 +16,11 @@ public class Day1 {
     private File file;
 
     public void run() {
-        file = new File("input");
+        file = new File("inputfiles/inputD1");
         String line;
         int cont = 0;
 
-        sc = newScanner(sc, file);
+        sc = newScanner(file);
         
         while (sc.hasNextLine()) {
             sc.nextLine();
@@ -29,7 +29,7 @@ public class Day1 {
         
         items = new int[cont];
         
-        sc = newScanner(sc, file);
+        sc = newScanner(file);
 
         for (int i = 0; i < cont; i++) {
             line = sc.nextLine();
@@ -80,7 +80,9 @@ public class Day1 {
         return highestCal;
     }
     
-    private Scanner newScanner(Scanner scanner, File file) {
+    private Scanner newScanner(File file) {
+        Scanner scanner = null;
+        
         try {
             scanner = new Scanner(file);
         } catch (FileNotFoundException e) {
@@ -95,6 +97,7 @@ public class Day1 {
         int topThreeCalories;
         int totalCal = 0;
         int elfNumber = 0;
+        int elfPosition;
         
         for (int i = 0; i < items.length; i++) {
             if (items[i] == 0) {
@@ -103,10 +106,14 @@ public class Day1 {
                 if (elfNumber == 1) {
                     elves.add(new Elf(totalCal, elfNumber));
                 } else if (elfNumber <= 3) {
+                    elfPosition = elfNumber - 1;
+                    
                     for (int j = 0; j < elfNumber - 1; j++) {
-                        
+                        if (totalCal > elves.get(j).getCalories()) {
+                            elfPosition = j;
+                        }
                     }
-                    elves.add(new Elf(totalCal, elfNumber));
+                    elves.add(elfPosition, new Elf(totalCal, elfNumber));
                 } else {
                     for (int j = 0; j < 3; j++) {
                         if (elves.get(j) == null || totalCal > elves.get(j).getCalories()) {
