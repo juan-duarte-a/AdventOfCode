@@ -1,6 +1,7 @@
 package adventofcode;
 
 import adventofcode.day1classes.Elf;
+import colors.ConsoleColors;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -10,11 +11,12 @@ import java.util.Scanner;
  *
  * @author juan
  */
-public class Day1 {
+public class Day1 implements Day {
     private Scanner sc;
     private int[] items;
     private File file;
 
+    @Override
     public void run() {
         file = new File("inputfiles/inputD1");
         String line;
@@ -41,11 +43,14 @@ public class Day1 {
             }
         }
         
-        System.out.println("Part 1:");
-        System.out.println("Most calories carried by an elf: " + calories());
-        System.out.println("\nPart 2:");
+        System.out.printf("%n" + ConsoleColors.CYAN_BOLD + "Day 1%n%n" + ConsoleColors.RESET);
+        System.out.println(ConsoleColors.GREEN + "Part 1:" + ConsoleColors.RESET);
+        System.out.println("Most calories carried by an elf: " + 
+                ConsoleColors.WHITE + calories() + ConsoleColors.RESET);
+        System.out.println("");
+        System.out.printf(ConsoleColors.GREEN + "Part 2:%n" + ConsoleColors.RESET);
         System.out.println("Total calories carried by top 3 elves"
-                + " with more calories: " + caloriesPart2());
+                + " with more calories: " +ConsoleColors.WHITE + part2() + ConsoleColors.RESET);
     }
     
     private int calories() {
@@ -75,7 +80,8 @@ public class Day1 {
             }
         }
         
-        System.out.println("Elf carrying the most calories: " + highestCalElf);
+        System.out.println("Elf carrying the most calories: " + ConsoleColors.WHITE + 
+                highestCalElf + ConsoleColors.RESET);
         
         return highestCal;
     }
@@ -92,7 +98,7 @@ public class Day1 {
         return scanner;
     }
     
-    private int caloriesPart2() {
+    private int part2() {
         ArrayList<Elf> elves = new ArrayList<>();
         int topThreeCalories;
         int totalCal = 0;
@@ -130,9 +136,9 @@ public class Day1 {
             }
         }
         
-        System.out.println("Top three elves with the most calories: " + 
+        System.out.println("Top three elves with the most calories: " + ConsoleColors.WHITE + 
                 elves.get(0).getNumber() + ", " + elves.get(1).getNumber() + 
-                ", " + elves.get(2).getNumber());
+                ", " + elves.get(2).getNumber() + ConsoleColors.RESET);
         
         topThreeCalories = elves.get(0).getCalories() + 
                 elves.get(1).getCalories() + elves.get(2).getCalories();
