@@ -29,7 +29,11 @@ public class AdventOfCode {
             option = sc.nextLine().toUpperCase();
             
             if (!option.equals("X")) {
-                days[Integer.parseInt(option) - 1].run();
+                try {
+                    days[Integer.parseInt(option) - 1].run();
+                } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+                    System.out.println(ConsoleColors.YELLOW + "Wrong option! Try again." + ConsoleColors.RESET);
+                }
             }
         } while (!option.equals("X"));
     }
