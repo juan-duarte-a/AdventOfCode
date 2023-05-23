@@ -1,4 +1,4 @@
 # Ignore files and folders.
 target/
 .class
-
+nb-configuration.xlm
