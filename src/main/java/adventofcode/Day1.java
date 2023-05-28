@@ -1,56 +1,53 @@
 package adventofcode;
 
 import adventofcode.day1classes.Elf;
+import adventofcode.utils.InputLoader;
+import adventofcode.utils.NewDay;
 import colors.ConsoleColors;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 /**
  *
  * @author juan
  */
 public class Day1 implements Day {
-    private Scanner sc;
     private int[] items;
     private File file;
 
     @Override
     public void run() {
         file = new File("inputfiles/inputD1");
-        String line;
-        int cont = 0;
-
-        sc = newScanner(file);
+        String inputLines[];
         
-        while (sc.hasNextLine()) {
-            sc.nextLine();
-            cont++;
+        NewDay.newDayText(1);
+        InputLoader il = new InputLoader();
+        
+        try {
+            inputLines = il.inputArray(file, true);
+        } catch (FileNotFoundException e) {
+            System.out.println(e);
+            return;
         }
         
-        items = new int[cont];
+        items = new int[inputLines.length];
         
-        sc = newScanner(file);
-
-        for (int i = 0; i < cont; i++) {
-            line = sc.nextLine();
-            
-            if (line.equals("")) {
+        for (int i = 0; i < inputLines.length; i++) {
+            if (inputLines[i].equals("")) {
                 items[i] = 0;
             } else {
-                items[i] = Integer.parseInt(line);
+                items[i] = Integer.parseInt(inputLines[i]);
             }
         }
         
-        System.out.printf("%n" + ConsoleColors.CYAN_BOLD + "Day 1%n%n" + ConsoleColors.RESET);
-        System.out.println(ConsoleColors.GREEN + "Part 1:" + ConsoleColors.RESET);
+        NewDay.partText(1);
         System.out.println("Most calories carried by an elf: " + 
                 ConsoleColors.WHITE + calories() + ConsoleColors.RESET);
-        System.out.println("");
-        System.out.printf(ConsoleColors.GREEN + "Part 2:%n" + ConsoleColors.RESET);
+        
+        NewDay.partText(2);
         System.out.println("Total calories carried by top 3 elves"
-                + " with more calories: " +ConsoleColors.WHITE + part2() + ConsoleColors.RESET);
+                + " with more calories: " + ConsoleColors.WHITE + part2() + ConsoleColors.RESET);
     }
     
     private int calories() {
@@ -84,18 +81,6 @@ public class Day1 implements Day {
                 highestCalElf + ConsoleColors.RESET);
         
         return highestCal;
-    }
-    
-    private Scanner newScanner(File file) {
-        Scanner scanner = null;
-        
-        try {
-            scanner = new Scanner(file);
-        } catch (FileNotFoundException e) {
-            System.out.println(e);
-        }
-        
-        return scanner;
     }
     
     private int part2() {

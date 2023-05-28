@@ -1,5 +1,7 @@
 package adventofcode;
 
+import adventofcode.utils.InputLoader;
+import adventofcode.utils.NewDay;
 import colors.ConsoleColors;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -10,6 +12,7 @@ import java.util.Scanner;
  * @author juan
  */
 public class Day2 implements Day {
+    
     private static final char ROCK = 'X';
     private static final char PAPER = 'Y';
     private static final char SCISSORS = 'Z';
@@ -24,12 +27,20 @@ public class Day2 implements Day {
 
     @Override
     public final void run() {
+        File file = new File("inputfiles/inputD2");
         char opponentPlay;
         char onePlay;
         int points = 0;
         
-        System.out.printf("%n" + ConsoleColors.CYAN_BOLD + "Day 2" + ConsoleColors.RESET + "%n");
-        loadInput(false);
+        NewDay.newDayText(2);
+        InputLoader il = new InputLoader();
+        
+        try {
+            strategy = il.inputArray(file, true);
+        } catch (FileNotFoundException e) {
+            System.out.println(e);
+            return;
+        }
 
         for (String play : strategy) {
             opponentPlay = play.charAt(0);
@@ -37,7 +48,7 @@ public class Day2 implements Day {
             points += playResult(opponentPlay, onePlay);
         }
         
-        System.out.printf(ConsoleColors.GREEN + "%nPart 1" + ConsoleColors.RESET + "%n");
+        NewDay.partText(1);
         System.out.println("Total points obtained: " + ConsoleColors.WHITE + points + ConsoleColors.RESET);
         
         part2();
@@ -54,7 +65,7 @@ public class Day2 implements Day {
             points += playResult2(opponentPlay, onePlay);
         }
         
-        System.out.printf(ConsoleColors.GREEN + "%nPart 2" + ConsoleColors.RESET + "%n");
+        NewDay.partText(2);
         System.out.println("Total points obtained: " + ConsoleColors.WHITE + points + ConsoleColors.RESET);
     }
     
@@ -118,39 +129,4 @@ public class Day2 implements Day {
                 opponentPlay == OPP_SCISSORS && onePlay == SCISSORS;
     }
     
-    private Scanner newScanner(File file) {
-        Scanner scanner = null;
-        
-        try {
-            scanner = new Scanner(file);
-        } catch (FileNotFoundException e) {
-            System.out.println(e);
-        }
-        
-        return scanner;
-    }
-    
-    private void loadInput(boolean verbose) {
-        File file = new File("inputfiles/inputD2");
-        Scanner sc = newScanner(file);
-        int lines = 0;
-        
-        while (sc.hasNext()) {
-            sc.nextLine();
-            lines++;
-        }
-        
-        strategy = new String[lines];
-        sc = newScanner(file);
-        
-        for (int i = 0; i < lines; i++) {
-            strategy[i] = sc.nextLine();
-        }
-        
-        if (verbose) {
-            System.out.println("");
-            System.out.printf(ConsoleColors.BLACK_BOLD + "%d lines were read.%n" + 
-                    ConsoleColors.RESET, strategy.length);
-        }
-    }
 }
