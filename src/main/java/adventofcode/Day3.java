@@ -27,10 +27,13 @@ public class Day3 implements Day {
         NewDay.partText(1);
         System.out.println("Sum of the priority of repeated items: " + 
                 ConsoleColors.WHITE + priorityRepeatedItems() + ConsoleColors.RESET);
+        
+        NewDay.partText(2);
+        System.out.println("Sum of the priority of badges: " +
+                ConsoleColors.WHITE + priorityBadges() + ConsoleColors.RESET);
     }
     
     private int priorityRepeatedItems() {
-        int priority = 0;
         int itemQuantity;
         boolean found;
         StringBuilder repeatedItems = new StringBuilder("");
@@ -57,8 +60,54 @@ public class Day3 implements Day {
             }
         }
         
-        for (int i = 0; i < repeatedItems.length(); i++) {
-            char item = repeatedItems.charAt(i);
+        return priorityItems(repeatedItems);
+    }
+    
+    private int priorityBadges() {
+        StringBuilder badges = new StringBuilder("");
+        boolean foundInAllRucksacks;
+        
+        for (int i = 0; i < rucksacks.length; i += 3) {
+            String rucksack1 = rucksacks[i];
+            String rucksack2 = rucksacks[i + 1];
+            String rucksack3 = rucksacks[i + 2];
+            foundInAllRucksacks = false;
+            
+            for (int j = 0; j < rucksack1.length(); j++) {
+                char item1 = rucksack1.charAt(j);
+                
+                for (int k = 0; k < rucksack2.length(); k++) {
+                    char item2 = rucksack2.charAt(k);
+                    
+                    if (item1 == item2) {
+                        for (int l = 0; l < rucksack3.length(); l++) {
+                            char item3 = rucksack3.charAt(l);
+                            
+                            if (item2 == item3) {
+                                badges.append(item3);
+                                foundInAllRucksacks = true;
+                                break;
+                            }
+                        }
+                        
+                        break;
+                    }
+                }
+
+                if (foundInAllRucksacks) {
+                    break;
+                }
+            }
+        }
+        
+        return priorityItems(badges);
+    }
+    
+    private int priorityItems(StringBuilder items) {
+        int priority = 0;
+        
+        for (int i = 0; i < items.length(); i++) {
+            char item = items.charAt(i);
             
             if (Character.isLowerCase(item)) {
                 priority += (int) item - 96;
@@ -66,6 +115,7 @@ public class Day3 implements Day {
                 priority += (int) item - 65 + 27;
             }
         }
+            
         return priority;
     }
     
