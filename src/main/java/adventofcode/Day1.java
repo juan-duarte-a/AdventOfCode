@@ -18,14 +18,14 @@ public class Day1 implements Day {
 
     @Override
     public void run() {
-        file = new File("inputfiles/inputD1");
+        file = new File("src/main/resources/inputfiles/inputD1");
         String inputLines[];
         
         NewDay.newDayText(1);
         InputLoader il = new InputLoader();
         
         try {
-            inputLines = il.inputArray(file, true);
+            inputLines = il.inputArrayInternalFile(file, true);
         } catch (FileNotFoundException e) {
             System.out.println(e);
             return;

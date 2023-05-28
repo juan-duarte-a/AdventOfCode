@@ -27,7 +27,7 @@ public class Day2 implements Day {
 
     @Override
     public final void run() {
-        File file = new File("inputfiles/inputD2");
+        File file = new File("src/main/resources/inputfiles/inputD2");
         char opponentPlay;
         char onePlay;
         int points = 0;
@@ -36,7 +36,7 @@ public class Day2 implements Day {
         InputLoader il = new InputLoader();
         
         try {
-            strategy = il.inputArray(file, true);
+            strategy = il.inputArrayInternalFile(file, true);
         } catch (FileNotFoundException e) {
             System.out.println(e);
             return;

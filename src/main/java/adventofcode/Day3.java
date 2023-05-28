@@ -13,12 +13,12 @@ public class Day3 implements Day {
     @Override
     public void run() {
         InputLoader il = new InputLoader();
-        File file = new File("inputfiles/inputD3");
+        File file = new File("src/main/resources/inputfiles/inputD3");
         
         NewDay.newDayText(3);
         
         try {
-            rucksacks = il.inputArray(file, true);
+            rucksacks = il.inputArrayInternalFile(file, true);
         } catch (FileNotFoundException e) {
             System.out.println(e);
             return;
