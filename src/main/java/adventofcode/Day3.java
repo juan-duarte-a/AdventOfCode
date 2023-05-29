@@ -39,9 +39,9 @@ public class Day3 implements Day {
         StringBuilder repeatedItems = new StringBuilder("");
         
         for (String rucksack : rucksacks) {
-            found = false;
             itemQuantity = rucksack.length();
-            
+
+            foundInAllRucksacks:
             for (int i = 0; i < itemQuantity / 2; i++) {
                 char item1 = rucksack.charAt(i);
                 
@@ -49,13 +49,8 @@ public class Day3 implements Day {
                     char item2 = rucksack.charAt(j);
                     if (item1 == item2) {
                         repeatedItems.append(item2);
-                        found = true;
-                        break;
+                        break foundInAllRucksacks;
                     }
-                }
-
-                if (found) {
-                    break;
                 }
             }
         }
