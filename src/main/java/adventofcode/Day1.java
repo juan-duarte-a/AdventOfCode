@@ -14,15 +14,14 @@ import java.util.ArrayList;
  */
 public class Day1 implements Day {
     private int[] items;
-    private File file;
-
+    
     @Override
     public void run() {
-        file = new File("src/main/resources/inputfiles/inputD1");
+        final File file = new File("src/main/resources/inputfiles/inputD1");
+        InputLoader il = new InputLoader();
         String inputLines[];
         
         NewDay.newDayText(1);
-        InputLoader il = new InputLoader();
         
         try {
             inputLines = il.inputArrayInternalFile(file, true);

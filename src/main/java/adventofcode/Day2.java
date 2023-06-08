@@ -5,7 +5,6 @@ import adventofcode.utils.NewDay;
 import colors.ConsoleColors;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Scanner;
 
 /**
  *
@@ -27,13 +26,13 @@ public class Day2 implements Day {
 
     @Override
     public final void run() {
-        File file = new File("src/main/resources/inputfiles/inputD2");
+        final File file = new File("src/main/resources/inputfiles/inputD2");
+        InputLoader il = new InputLoader();
         char opponentPlay;
         char onePlay;
         int points = 0;
         
         NewDay.newDayText(2);
-        InputLoader il = new InputLoader();
         
         try {
             strategy = il.inputArrayInternalFile(file, true);

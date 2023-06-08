@@ -12,8 +12,8 @@ public class Day3 implements Day {
 
     @Override
     public void run() {
+        final File file = new File("src/main/resources/inputfiles/inputD3");
         InputLoader il = new InputLoader();
-        File file = new File("src/main/resources/inputfiles/inputD3");
         
         NewDay.newDayText(3);
         
@@ -35,7 +35,6 @@ public class Day3 implements Day {
     
     private int priorityRepeatedItems() {
         int itemQuantity;
-        boolean found;
         StringBuilder repeatedItems = new StringBuilder("");
         
         for (String rucksack : rucksacks) {
