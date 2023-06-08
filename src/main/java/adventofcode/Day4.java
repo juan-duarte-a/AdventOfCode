@@ -29,6 +29,10 @@ public class Day4 implements Day {
         NewDay.partText(1);
         System.out.println("Number of fully contained sections: " + 
                 ConsoleColors.WHITE + countFullyContainedSections() + ConsoleColors.RESET);
+        
+        NewDay.partText(2);
+        System.out.println("Number of overlapping sections: " + 
+                ConsoleColors.WHITE + countOverlappingSections() + ConsoleColors.RESET);
     }
     
     private int countSections(Function<String, Integer[]> separateSections, 
@@ -47,7 +51,15 @@ public class Day4 implements Day {
     }
     
     private int countFullyContainedSections() {
-        Function<String, Integer[]> separateSections = codedSections -> {
+        Predicate<Integer[]> fullyContained = sections
+                -> (sections[0] <= sections[2] && sections[1] >= sections[3])
+                || (sections[2] <= sections[0] && sections[3] >= sections[1]);
+
+        return countSections(separateSections(), fullyContained);
+    }
+    
+    private Function<String, Integer[]> separateSections() {
+        Function<String, Integer[]> separate = codedSections -> {
             Integer[] sections = new Integer[4];
             String[] pairs = codedSections.split(",");
             String[] pairOneSections = pairs[0].split("-");
@@ -59,11 +71,17 @@ public class Day4 implements Day {
             return sections;
         };
         
-        Predicate<Integer[]> fullyContained = sections ->
-                (sections[0] <= sections[2] && sections[1] >= sections[3]) || 
-                        (sections[2] <= sections[0] && sections[3] >= sections[1]);
-        
-        return countSections(separateSections, fullyContained);
+        return separate;
+    }
+    
+    private int countOverlappingSections() {
+        Predicate<Integer[]> overlappingSections = sections
+                -> ((sections[0] >= sections[2] && sections[0] <= sections[3])
+                || (sections[1] >= sections[2] && sections[1] <= sections[3]))
+                || ((sections[2] >= sections[0] && sections[2] <= sections[1])
+                || (sections[3] >= sections[0] && sections[3] <= sections[1]));
+
+        return countSections(separateSections(), overlappingSections);
     }
     
 }
