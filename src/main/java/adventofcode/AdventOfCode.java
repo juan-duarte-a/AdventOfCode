@@ -12,7 +12,7 @@ public class AdventOfCode {
 
     public static void main(String[] args) {
         // Do not forget to update this!
-        int totalDaysSolved = 3;
+        int totalDaysSolved = 4;
         
         Scanner sc = new Scanner(System.in);
         String option;
@@ -22,6 +22,7 @@ public class AdventOfCode {
         days[0] = new Day1();
         days[1] = new Day2();
         days[2] = new Day3();
+        days[3] = new Day4();
         
         do {
             System.out.printf("%n" + ConsoleColors.PURPLE + "Advent Of Code" + ConsoleColors.RESET);
