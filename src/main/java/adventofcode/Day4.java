@@ -17,7 +17,7 @@ public class Day4 implements Day {
         InputLoader il = new InputLoader();
         File file = new File("src/main/resources/inputfiles/inputD4");
         
-        NewDay.newDayText(3);
+        NewDay.newDayText(4);
         
         try {
             assignedSections = il.inputArrayInternalFile(file, true);
