@@ -15,15 +15,12 @@ public class Day5 implements Day {
     private List<Stack<Character>> stacks;
     private List<Short[]> rearrangement;
     private short numberOfStacks;
-    private short higherStack;
+    private short initialHigherStack;
 
-    public Day5() {
-        stacks = new ArrayList<>();
-        rearrangement = new ArrayList<>();
-    }
-    
     @Override
     public void run() {
+        stacks = new ArrayList<>();
+        rearrangement = new ArrayList<>();
         InputLoader il = new InputLoader();
         File file = new File("src/main/resources/inputfiles/inputD5");
         
@@ -38,15 +35,20 @@ public class Day5 implements Day {
         
         numberOfStacks = countNumberOfStacks();
         
-        for (int i = 0; i < numberOfStacks; i++) {
-            stacks.add(new Stack<>());
-        }
-        
+        initializeStacks();
         decodeInitialArrangement();
-        decodeRearrangement(higherStack + 2);
+        decodeRearrangement(initialHigherStack + 2);
         rearrange();
         
         NewDay.partText(1);
+        System.out.println("Crates in top of each stack: " + 
+                ConsoleColors.WHITE + getCratesOnTop() + ConsoleColors.RESET);
+        
+        initializeStacks();
+        decodeInitialArrangement();
+        rearrangeWithCrateMover9001();
+        
+        NewDay.partText(2);
         System.out.println("Crates in top of each stack: " + 
                 ConsoleColors.WHITE + getCratesOnTop() + ConsoleColors.RESET);
         
@@ -54,23 +56,31 @@ public class Day5 implements Day {
     
     private short countNumberOfStacks() {
         short number = 0;
-        short maxHeightStack = 0;
+        short higherStack = 0;
         
-        while (!rearrangementProcedure[maxHeightStack].startsWith(" ")) {
-            maxHeightStack++;
+        while (!rearrangementProcedure[higherStack].startsWith(" ")) {
+            higherStack++;
         } 
         
-        for (int i = 1; i < rearrangementProcedure[maxHeightStack - 1].length(); i += 4) {
+        for (int i = 1; i < rearrangementProcedure[higherStack - 1].length(); i += 4) {
             number++;
         }
         
-        higherStack = maxHeightStack;
+        initialHigherStack = higherStack;
         
         return number;
     }
     
+    private void initializeStacks() {
+        stacks.clear();
+        
+        for (int i = 0; i < numberOfStacks; i++) {
+            stacks.add(new Stack<>());
+        }
+    }
+    
     private void decodeInitialArrangement () {
-        for (int i = higherStack - 1; i >= 0; i--) {
+        for (int i = initialHigherStack - 1; i >= 0; i--) {
             int stack = 0;
             
             for (int j = 1; j < 2 + (8 * 4); j += 4) {
@@ -104,7 +114,7 @@ public class Day5 implements Day {
     private void rearrange() {
         for (Short[] move : rearrangement) {
             for (int i = 0; i < move[0]; i++) {
-                
+                stacks.get(move[2] - 1).add(stacks.get(move[1] - 1).pop());
             }
         }
     }
@@ -112,9 +122,25 @@ public class Day5 implements Day {
     private String getCratesOnTop() {
         String cratesOnTop = "";
         
-        
+        for (int i = 0; i < numberOfStacks; i++) {
+            cratesOnTop += stacks.get(i).peek();
+        }
         
         return cratesOnTop;
+    }
+    
+    private void rearrangeWithCrateMover9001() {
+        Stack<Character> temporaryStack = new Stack<>();
+        
+        for (Short[] move : rearrangement) {
+            for (int i = 0; i < move[0]; i++) {
+                temporaryStack.add(stacks.get(move[1] - 1).pop());
+            }
+    
+            for (int i = 0; i < move[0]; i++) {
+                stacks.get(move[2] - 1).add(temporaryStack.pop());
+            }
+        }
     }
     
 }
