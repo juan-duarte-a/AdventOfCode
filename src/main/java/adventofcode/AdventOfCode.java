@@ -39,5 +39,7 @@ public class AdventOfCode {
                 }
             }
         } while (!option.equals("X"));
+        
+        sc.close();
     }
 }

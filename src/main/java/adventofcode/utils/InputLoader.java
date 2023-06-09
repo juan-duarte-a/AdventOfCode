@@ -25,6 +25,8 @@ public class InputLoader {
             countLines++;
         }
         
+        sc.close();
+        
         lines = new String[countLines];
         sc = new Scanner(file);
         
