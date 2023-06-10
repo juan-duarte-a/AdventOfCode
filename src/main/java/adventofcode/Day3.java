@@ -20,7 +20,7 @@ public class Day3 implements Day {
         try {
             rucksacks = il.inputArrayInternalFile(file, true);
         } catch (FileNotFoundException e) {
-            System.out.println(e);
+            System.err.println(e);
             return;
         }
         

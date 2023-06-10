@@ -17,7 +17,7 @@ public class Day1 implements Day {
     
     @Override
     public void run() {
-        final File file = new File("src/main/resources/inputfiles/inputD1");
+        final File file = new File("src/main/resources/inputfiles/inputD1s");
         InputLoader il = new InputLoader();
         String inputLines[];
         
@@ -26,7 +26,7 @@ public class Day1 implements Day {
         try {
             inputLines = il.inputArrayInternalFile(file, true);
         } catch (FileNotFoundException e) {
-            System.out.println(e);
+            System.err.println(e);
             return;
         }
         

@@ -22,7 +22,7 @@ public class Day4 implements Day {
         try {
             assignedSections = il.inputArrayInternalFile(file, true);
         } catch (FileNotFoundException e) {
-            System.out.println(e);
+            System.err.println(e);
             return;
         }
         

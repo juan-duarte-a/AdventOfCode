@@ -37,7 +37,7 @@ public class Day2 implements Day {
         try {
             strategy = il.inputArrayInternalFile(file, true);
         } catch (FileNotFoundException e) {
-            System.out.println(e);
+            System.err.println(e);
             return;
         }
 

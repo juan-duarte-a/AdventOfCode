@@ -70,7 +70,7 @@ public class InputLoader {
                 throw new FileNotFoundException("File " + file.getName() + " not found!");
             }
         } catch (IOException e) {
-            System.out.println(e);
+            System.err.println(e);
             return null;
         }
         
