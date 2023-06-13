@@ -76,7 +76,7 @@ public class InputLoader {
         
         if (verbose) {
             assert lines != null;
-            System.out.printf(ConsoleColors.BLACK_BOLD + "%d lines were read.%n" + 
+            System.out.printf(ConsoleColors.BLACK_BOLD + "%d line(s) were read.%n" + 
                     ConsoleColors.RESET, lines.length);
         }
         

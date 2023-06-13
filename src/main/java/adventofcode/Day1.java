@@ -17,7 +17,7 @@ public class Day1 implements Day {
     
     @Override
     public void run() {
-        final File file = new File("src/main/resources/inputfiles/inputD1s");
+        final File file = new File("src/main/resources/inputfiles/inputD1");
         InputLoader il = new InputLoader();
         String inputLines[];
         
