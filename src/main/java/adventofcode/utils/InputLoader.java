@@ -59,6 +59,9 @@ public class InputLoader {
                     countLines++;
                 }
                 
+                bufferedReader.close();
+                inputStream.close();
+                
                 lines = new String[countLines];
                 inputStream = adventofcode.AdventOfCode.class.getResourceAsStream("/inputfiles/" + file.getName());
                 bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
@@ -66,6 +69,9 @@ public class InputLoader {
                 for (int i = 0; i < countLines; i++) {
                     lines[i] = bufferedReader.readLine();
                 } 
+                
+                bufferedReader.close();
+                inputStream.close();
             } else {
                 throw new FileNotFoundException("File " + file.getName() + " not found!");
             }
