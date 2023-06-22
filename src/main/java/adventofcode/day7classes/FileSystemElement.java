@@ -2,14 +2,13 @@ package adventofcode.day7classes;
 
 import java.util.Iterator;
 
-public class FileSystemElement implements Iterable<FileSystemElement>{
+public class FileSystemElement implements Iterable<FileSystemElement>, Comparable<FileSystemElement>{
     
     public static enum Type {
         DIRECTORY,
         FILE
     };
     
-    private final FileSystem fileSystem;
     private final FileSystemElement parent;
     private final FileSystemElement root;
     private FileSystemElement next;
@@ -17,17 +16,15 @@ public class FileSystemElement implements Iterable<FileSystemElement>{
     private FileSystemElement last;
     private final String name;
     private final Type type;
-    private final int size;
-    private boolean hasDirectories;
+    private int size;
 
-    public FileSystemElement(FileSystem fileSystem, FileSystemElement parent, 
+    public FileSystemElement(FileSystemElement parent, 
             FileSystemElement root, String name, Type type, int size) {
-        this.fileSystem = fileSystem;
         this.parent = parent;
         this.root = root == null ? this : root;
         this.name = name;
         this.type = type;
-        this.size = size;
+        setSize(size);
     }
 
     public FileSystemElement getParent() {
@@ -50,6 +47,13 @@ public class FileSystemElement implements Iterable<FileSystemElement>{
         return size;
     }
 
+    private void setSize(int size) {
+        this.size += size;
+        
+        if (parent != null)
+            parent.setSize(size);
+    }
+
     public FileSystemElement getFirst() {
         return first;
     }
@@ -67,14 +71,31 @@ public class FileSystemElement implements Iterable<FileSystemElement>{
     }
 
     public boolean hasDirectories() {
-        return hasDirectories;
+        for (FileSystemElement element : this) {
+            if (element.getType() == Type.DIRECTORY)
+                return true;
+        }
+        
+        return false;
     }
     
     public String getPath() {
         if (this == root)
             return "/";
         
-        return parent.getPath() + name + "/";
+        return parent.getPath() + (type == Type.DIRECTORY ? name : "") + "/";
+    }
+    
+    public String getFullPath() {
+        if (this == root)
+            return "/";
+        
+        return parent.getPath() + name + (type == Type.DIRECTORY ? "/" : "");
+    }
+    
+    @Override
+    public int compareTo(FileSystemElement element) {
+        return this.size - element.size;
     }
     
     public void setNext(FileSystemElement nexElement) {
@@ -92,7 +113,7 @@ public class FileSystemElement implements Iterable<FileSystemElement>{
 
     @Override
     public Iterator<FileSystemElement> iterator() {
-        return fileSystem;
+        return new DirectoryIterator(this);
     }
     
     @Override

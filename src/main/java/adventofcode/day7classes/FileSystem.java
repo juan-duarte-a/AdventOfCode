@@ -2,39 +2,40 @@ package adventofcode.day7classes;
 
 import java.util.Iterator;
 
-public class FileSystem implements Iterator<FileSystemElement> {
+public class FileSystem implements Iterable<FileSystemElement> {
     
     private FileSystemElement currentDirectory;
-    private FileSystemElement currentElement;
     private final FileSystemElement root;
 
     public FileSystem() {
-        root = new FileSystemElement(this, 
+        root = new FileSystemElement(
                 null, null, "root", FileSystemElement.Type.DIRECTORY, 0);
             
         currentDirectory = root;
     }
     
     public void addDirectory(String name) {
-        FileSystemElement directory = new FileSystemElement(this, 
+        FileSystemElement directory = new FileSystemElement(
                 currentDirectory, root, name, FileSystemElement.Type.DIRECTORY, 0);
+
         updateCurrentElement(directory);
     }
     
-    public void addFile(String name, FileSystemElement.Type type, int size) {
-        FileSystemElement file = new FileSystemElement(this, 
-                currentDirectory, root, name, type, size);
+    public void addFile(String name, int size) {
+        FileSystemElement file = new FileSystemElement(
+                currentDirectory, root, name, FileSystemElement.Type.FILE, size);
+
         updateCurrentElement(file);
     }
     
     private void updateCurrentElement(FileSystemElement element) {
         if (currentDirectory.getFirst() == null) {
             currentDirectory.setFirst(element);
-            currentElement = element;
         }
 
         if (currentDirectory.getLast() != null)
             currentDirectory.getLast().setNext(element);
+
         currentDirectory.setLast(element);
     }
     
@@ -55,20 +56,17 @@ public class FileSystem implements Iterator<FileSystemElement> {
             }
         }
         
-        resetIterator();
         return true;
     }
     
     public void goToParentDirectory() {
         if (currentDirectory.getParent() != null) {
             currentDirectory = currentDirectory.getParent();
-            resetIterator();
         }
     }
     
     public void goToRoot() {
         currentDirectory = root;
-        resetIterator();
     }
     
     private FileSystemElement currentDirectoryContainsDirectory(String directoryName) {
@@ -82,29 +80,16 @@ public class FileSystem implements Iterator<FileSystemElement> {
             }
         }
  
-        resetIterator();
         return directory;
     }
     
     public void printCurrentDirectoryContents() {
         currentDirectory.forEach(element -> System.out.println(element));
-        resetIterator();
-    }
-    
-    private void resetIterator() {
-        currentElement = currentDirectory.getFirst();
     }
 
     @Override
-    public boolean hasNext() {
-        return currentElement != null;
-    }
-
-    @Override
-    public FileSystemElement next() {
-        FileSystemElement element = currentElement;
-        currentElement = currentElement.next();
-        return element;
+    public Iterator<FileSystemElement> iterator() {
+        return new FileSystemIterator(root);
     }
     
 }
