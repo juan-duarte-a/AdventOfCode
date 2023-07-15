@@ -59,7 +59,7 @@ public class Day4 implements Day {
     }
     
     private Function<String, Integer[]> separateSections() {
-        Function<String, Integer[]> separate = codedSections -> {
+        return codedSections -> {
             Integer[] sections = new Integer[4];
             String[] pairs = codedSections.split(",");
             String[] pairOneSections = pairs[0].split("-");
@@ -70,8 +70,6 @@ public class Day4 implements Day {
             sections[3] = Integer.valueOf(pairTwoSections[1]);
             return sections;
         };
-        
-        return separate;
     }
     
     private int countOverlappingSections() {

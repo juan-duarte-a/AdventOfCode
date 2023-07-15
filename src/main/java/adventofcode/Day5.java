@@ -120,13 +120,13 @@ public class Day5 implements Day {
     }
     
     private String getCratesOnTop() {
-        String cratesOnTop = "";
+        StringBuilder cratesOnTop = new StringBuilder();
         
         for (int i = 0; i < numberOfStacks; i++) {
-            cratesOnTop += stacks.get(i).peek();
+            cratesOnTop.append(stacks.get(i).peek());
         }
         
-        return cratesOnTop;
+        return cratesOnTop.toString();
     }
     
     private void rearrangeWithCrateMover9001() {

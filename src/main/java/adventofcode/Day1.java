@@ -19,7 +19,7 @@ public class Day1 implements Day {
     public void run() {
         final File file = new File("src/main/resources/inputfiles/inputD1");
         InputLoader il = new InputLoader();
-        String inputLines[];
+        String[] inputLines;
         
         NewDay.newDayText(1);
         

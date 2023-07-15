@@ -41,7 +41,7 @@ public class Day6 implements Day {
             char c1 = code[0].charAt(characters - 3);
             char c2 = code[0].charAt(characters - 2);
             char c3 = code[0].charAt(characters - 1);
-            char c4 = code[0].charAt(characters - 0);
+            char c4 = code[0].charAt(characters);
             
             if ((c1 != c2 && c1 != c3 && c1 != c4) 
                     && (c2 != c3 && c2 != c4)

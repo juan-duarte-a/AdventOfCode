@@ -8,7 +8,6 @@ import colors.ConsoleColors;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 public class Day7 implements Day {
@@ -51,8 +50,8 @@ public class Day7 implements Day {
             
             switch (c[0]) {
                 case "$" -> {
-                    switch (c[1]) {
-                        case "cd" -> fileSystem.changeDirectory(c[2]);
+                    if (c[1].equals("cd")) {
+                        fileSystem.changeDirectory(c[2]);
                     }
                 }
                 case "dir" -> fileSystem.addDirectory(c[1]);
@@ -76,7 +75,7 @@ public class Day7 implements Day {
                 = StreamSupport.stream(fileSystem.spliterator(), false)
                         .filter(e -> e.getType() == FileSystemElement.Type.DIRECTORY)
                         .filter(d -> d.getSize() >= spaceToFree).sorted()
-                        .collect(Collectors.toList());
+                        .toList();
         
         return directories.get(0).getSize();
     }
@@ -127,7 +126,7 @@ public class Day7 implements Day {
         fs.printCurrentDirectoryContents();
         
         System.out.println("\n/////////////////////////////////\n");
-        fs.forEach(e -> System.out.println(e));
+        fs.forEach(System.out::println);
     }
     
 }
