@@ -12,7 +12,7 @@ public class AdventOfCode {
 
     public static void main(String[] args) {
         // Do not forget to update this!
-        int totalDaysSolved = 8;
+        int totalDaysSolved = 9;
         
         try (Scanner sc = new Scanner(System.in)) {
             String option;
@@ -27,7 +27,8 @@ public class AdventOfCode {
             days[5] = new Day6();
             days[6] = new Day7();
             days[7] = new Day8();
-            
+            days[8] = new Day9();
+
             do {
                 System.out.printf("%n" + ConsoleColors.PURPLE + "Advent Of Code" + ConsoleColors.RESET);
                 System.out.printf("%n%nSelect the day (1 to %d) or 'X' to exit.%n-> ", totalDaysSolved);

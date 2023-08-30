@@ -66,8 +66,10 @@ public class Day8 implements Day {
                 for (int k = 0; k < i; k++) {
                      if (trees[i][j] <= trees[k][j])
                         break;
-                    if (k == i-1)
+                    if (k == i - 1) {
                         visible = true;
+                        break;
+                    }
                 }
                 
                 if (visible) {
@@ -78,8 +80,10 @@ public class Day8 implements Day {
                 for (int k = trees.length-1; k > i; k--) {
                     if (trees[i][j] <= trees[k][j])
                         break;
-                    if (k == i+1)
+                    if (k == i + 1) {
                         visible = true;
+                        break;
+                    }
                 }
 
                 if (visible) {
@@ -90,8 +94,10 @@ public class Day8 implements Day {
                 for (int k = 0; k < j; k++) {
                     if (trees[i][j] <= trees[i][k])
                         break;
-                    if (k == j-1)
+                    if (k == j - 1) {
                         visible = true;
+                        break;
+                    }
                 }
 
                 if (visible) {
@@ -102,8 +108,10 @@ public class Day8 implements Day {
                 for (int k = trees[j].length-1; k > j; k--) {
                     if (trees[i][j] <= trees[i][k])
                         break;
-                    if (k == j+1)
+                    if (k == j + 1) {
                         visible = true;
+                        break;
+                    }
                 }
 
                 if (visible) {
