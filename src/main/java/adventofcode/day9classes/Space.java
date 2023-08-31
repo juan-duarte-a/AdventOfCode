@@ -4,20 +4,26 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Space {
-    private Position headPosition;
-    private Position tailPosition;
     private final Set<Position> positionsVisitedByHead;
     private final Set<Position> positionsVisitedByTail;
+    private final int numberOfKnots;
+    private final Position[] knots;
 
     public enum Direction {L, R, U, D}
 
-    public Space() {
+    public Space(int numberOfKnots) {
         positionsVisitedByHead = new HashSet<>();
         positionsVisitedByTail = new HashSet<>();
-        headPosition = new Position(0, 0);
-        tailPosition = headPosition;
+        Position headPosition = new Position(0, 0);
         positionsVisitedByHead.add(headPosition);
-        positionsVisitedByTail.add(tailPosition);
+        this.numberOfKnots = numberOfKnots;
+        knots = new Position[numberOfKnots];
+
+        for (int i = 0; i < numberOfKnots; i++) {
+            knots[i] = headPosition;
+        }
+
+        positionsVisitedByTail.add(knots[numberOfKnots - 1]);
     }
 
     public void move(Direction direction, int times) {
@@ -29,50 +35,53 @@ public class Space {
                 case D -> down();
             }
 
-            positionsVisitedByHead.add(headPosition);
+            positionsVisitedByHead.add(knots[0]);
 
-            if (tailMustMove()) {
-                moveTail();
-                positionsVisitedByTail.add(tailPosition);
+            for (int j = 1; j < numberOfKnots; j++) {
+                if (knotMustMove(j)) {
+                    moveKnot(j);
+                }
             }
+            positionsVisitedByTail.add(knots[numberOfKnots - 1]);
         }
     }
 
     private void left() {
-        headPosition = new Position(headPosition.getX() - 1, headPosition.getY());
+        knots[0] = new Position(knots[0].getX() - 1, knots[0].getY());
     }
 
     private void right() {
-        headPosition = new Position(headPosition.getX() + 1, headPosition.getY());
+        knots[0] = new Position(knots[0].getX() + 1, knots[0].getY());
     }
 
     private void up() {
-        headPosition = new Position(headPosition.getX(), headPosition.getY() + 1);
+        knots[0] = new Position(knots[0].getX(), knots[0].getY() + 1);
     }
 
     private void down() {
-        headPosition = new Position(headPosition.getX(), headPosition.getY() - 1);
+        knots[0] = new Position(knots[0].getX(), knots[0].getY() - 1);
     }
 
-    private boolean tailMustMove() {
-        return Math.abs(tailPosition.getX() - headPosition.getX()) > 1
-                || Math.abs(tailPosition.getY() - headPosition.getY()) > 1;
+    private boolean knotMustMove(int knotNumber) {
+        return Math.abs(knots[knotNumber].getX() - knots[knotNumber - 1].getX()) > 1
+                || Math.abs(knots[knotNumber].getY() - knots[knotNumber - 1].getY()) > 1;
     }
 
-    private void moveTail() {
-        if (headPosition.getX() != tailPosition.getX() && headPosition.getY() != tailPosition.getY()) {
-            int x = headPosition.getX() - tailPosition.getX();
-            int y = headPosition.getY() - tailPosition.getY();
-            tailPosition = new Position(tailPosition.getX() + x / Math.abs(x),
-                    tailPosition.getY() + y / Math.abs(y));
+    private void moveKnot(int knotNumber) {
+        if (knots[knotNumber - 1].getX() != knots[knotNumber].getX()
+                && knots[knotNumber - 1].getY() != knots[knotNumber].getY()) {
+            int x = knots[knotNumber - 1].getX() - knots[knotNumber].getX();
+            int y = knots[knotNumber - 1].getY() - knots[knotNumber].getY();
+            knots[knotNumber] = new Position(knots[knotNumber].getX() + x / Math.abs(x),
+                    knots[knotNumber].getY() + y / Math.abs(y));
         } else {
-            tailPosition = new Position(
-                    tailPosition.getX() + (headPosition.getX() - tailPosition.getX())
-                            - (headPosition.getX() == tailPosition.getX() ? 0 : 1)
-                            * (headPosition.getX() < tailPosition.getX() ? -1 : 1),
-                    tailPosition.getY() + (headPosition.getY() - tailPosition.getY())
-                            - (headPosition.getY() == tailPosition.getY() ? 0 : 1)
-                            * (headPosition.getY() < tailPosition.getY() ? -1 : 1));
+            knots[knotNumber] = new Position(
+                    knots[knotNumber].getX() + (knots[knotNumber - 1].getX() - knots[knotNumber].getX())
+                            - (knots[knotNumber - 1].getX() == knots[knotNumber].getX() ? 0 : 1)
+                            * (knots[knotNumber - 1].getX() < knots[knotNumber].getX() ? -1 : 1),
+                    knots[knotNumber].getY() + (knots[knotNumber - 1].getY() - knots[knotNumber].getY())
+                            - (knots[knotNumber - 1].getY() == knots[knotNumber].getY() ? 0 : 1)
+                            * (knots[knotNumber - 1].getY() < knots[knotNumber].getY() ? -1 : 1));
         }
     }
 

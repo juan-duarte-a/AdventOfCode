@@ -29,7 +29,7 @@ public class Day9 implements Day {
 
         NewDay.partText(1);
 
-        space = new Space();
+        space = new Space(2);
         move();
 
         System.out.println("Number of positions that the tail visited at least once: " +
@@ -37,6 +37,15 @@ public class Day9 implements Day {
         System.out.println("Number of positions that the head visited at least once: " +
                 ConsoleColors.WHITE + space.getPositionsVisitedByHead() + ConsoleColors.RESET);
 
+        NewDay.partText(2);
+
+        space = new Space(10);
+        move();
+
+        System.out.println("Number of positions that the tail visited at least once: " +
+                ConsoleColors.WHITE + space.getPositionsVisitedByTail() + ConsoleColors.RESET);
+        System.out.println("Number of positions that the head visited at least once: " +
+                ConsoleColors.WHITE + space.getPositionsVisitedByHead() + ConsoleColors.RESET);
     }
 
     private void move() {
