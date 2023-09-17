@@ -39,40 +39,40 @@ public class Space {
     }
 
     private void left() {
-        headPosition = new Position(headPosition.getX() - 1, headPosition.getY());
+        headPosition = new Position(headPosition.x() - 1, headPosition.y());
     }
 
     private void right() {
-        headPosition = new Position(headPosition.getX() + 1, headPosition.getY());
+        headPosition = new Position(headPosition.x() + 1, headPosition.y());
     }
 
     private void up() {
-        headPosition = new Position(headPosition.getX(), headPosition.getY() + 1);
+        headPosition = new Position(headPosition.x(), headPosition.y() + 1);
     }
 
     private void down() {
-        headPosition = new Position(headPosition.getX(), headPosition.getY() - 1);
+        headPosition = new Position(headPosition.x(), headPosition.y() - 1);
     }
 
     private boolean tailMustMove() {
-        return Math.abs(tailPosition.getX() - headPosition.getX()) > 1
-                || Math.abs(tailPosition.getY() - headPosition.getY()) > 1;
+        return Math.abs(tailPosition.x() - headPosition.x()) > 1
+                || Math.abs(tailPosition.y() - headPosition.y()) > 1;
     }
 
     private void moveTail() {
-        if (headPosition.getX() != tailPosition.getX() && headPosition.getY() != tailPosition.getY()) {
-            int x = headPosition.getX() - tailPosition.getX();
-            int y = headPosition.getY() - tailPosition.getY();
-            tailPosition = new Position(tailPosition.getX() + x / Math.abs(x),
-                    tailPosition.getY() + y / Math.abs(y));
+        if (headPosition.x() != tailPosition.x() && headPosition.y() != tailPosition.y()) {
+            int x = headPosition.x() - tailPosition.x();
+            int y = headPosition.y() - tailPosition.y();
+            tailPosition = new Position(tailPosition.x() + x / Math.abs(x),
+                    tailPosition.y() + y / Math.abs(y));
         } else {
             tailPosition = new Position(
-                    tailPosition.getX() + (headPosition.getX() - tailPosition.getX())
-                            - (headPosition.getX() == tailPosition.getX() ? 0 : 1)
-                            * (headPosition.getX() < tailPosition.getX() ? -1 : 1),
-                    tailPosition.getY() + (headPosition.getY() - tailPosition.getY())
-                            - (headPosition.getY() == tailPosition.getY() ? 0 : 1)
-                            * (headPosition.getY() < tailPosition.getY() ? -1 : 1));
+                    tailPosition.x() + (headPosition.x() - tailPosition.x())
+                            - (headPosition.x() == tailPosition.x() ? 0 : 1)
+                            * (headPosition.x() < tailPosition.x() ? -1 : 1),
+                    tailPosition.y() + (headPosition.y() - tailPosition.y())
+                            - (headPosition.y() == tailPosition.y() ? 0 : 1)
+                            * (headPosition.y() < tailPosition.y() ? -1 : 1));
         }
     }
 

@@ -1,22 +1,6 @@
 package adventofcode.day9classes;
 
-public class Position {
-
-    private final int x;
-    private final int y;
-
-    public Position(int x, int y) {
-        this.x = x;
-        this.y = y;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
+public record Position(int x, int y) {
 
     @Override
     public boolean equals(Object o) {
@@ -29,10 +13,4 @@ public class Position {
         return y == position.y;
     }
 
-    @Override
-    public int hashCode() {
-        int result = x;
-        result = 31 * result + y;
-        return result;
-    }
 }

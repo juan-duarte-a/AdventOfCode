@@ -36,7 +36,7 @@ public class InputLoader {
         }
 
         if (verbose) {
-            System.out.printf(ConsoleColors.BLACK_BOLD + "%d lines were read.%n" +
+            System.out.printf(ConsoleColors.GREEN + "%d lines were read.%n" +
                     ConsoleColors.RESET, lines.length);
         }
 
@@ -83,7 +83,7 @@ public class InputLoader {
         }
 
         if (verbose) {
-            System.out.printf(ConsoleColors.BLACK_BOLD + "%d line(s) were read.%n" +
+            System.out.printf(ConsoleColors.GREEN + "%d line(s) were read.%n" +
                     ConsoleColors.RESET, lines.length);
         }
         

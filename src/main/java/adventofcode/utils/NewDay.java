@@ -12,6 +12,6 @@ public class NewDay {
     }
     
     public static void partText(int part) {
-        System.out.printf(ConsoleColors.GREEN + "%nPart %d" + ConsoleColors.RESET + "%n", part);
+        System.out.printf(ConsoleColors.BLUE + "%nPart %d" + ConsoleColors.RESET + "%n", part);
     }
 }
