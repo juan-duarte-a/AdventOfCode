@@ -11,6 +11,8 @@ public class Space {
 
     public enum Direction {L, R, U, D}
 
+    public record Position(int x, int y) { }
+
     public Space(int numberOfKnots) {
         positionsVisitedByHead = new HashSet<>();
         positionsVisitedByTail = new HashSet<>();

@@ -1,5 +1,6 @@
-package adventofcode;
+package adventofcode.days;
 
+import adventofcode.Day;
 import adventofcode.day9classes.Space;
 import adventofcode.utils.InputLoader;
 import adventofcode.utils.NewDay;

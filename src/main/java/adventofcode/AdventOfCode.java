@@ -1,5 +1,6 @@
 package adventofcode;
 
+import adventofcode.days.*;
 import colors.ConsoleColors;
 import java.util.Scanner;
 
@@ -12,7 +13,7 @@ public class AdventOfCode {
 
     public static void main(String[] args) {
         // Do not forget to update this!
-        int totalDaysSolved = 9;
+        int totalDaysSolved = 10;
         
         try (Scanner sc = new Scanner(System.in)) {
             String option;
@@ -28,6 +29,7 @@ public class AdventOfCode {
             days[6] = new Day7();
             days[7] = new Day8();
             days[8] = new Day9();
+            days[9] = new Day10();
 
             do {
                 System.out.printf("%n" + ConsoleColors.PURPLE + "Advent Of Code" + ConsoleColors.RESET);

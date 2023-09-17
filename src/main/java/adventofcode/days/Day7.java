@@ -1,5 +1,6 @@
-package adventofcode;
+package adventofcode.days;
 
+import adventofcode.Day;
 import adventofcode.day7classes.FileSystem;
 import adventofcode.day7classes.FileSystemElement;
 import adventofcode.utils.InputLoader;

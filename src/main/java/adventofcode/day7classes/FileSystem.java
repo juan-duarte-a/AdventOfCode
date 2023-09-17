@@ -48,7 +48,7 @@ public class FileSystem implements Iterable<FileSystemElement> {
             case "/" -> goToRoot();
             case ".." -> goToParentDirectory();
             default -> {
-                FileSystemElement directory = currentDirectoryContainsDirectory(directoryName);
+                FileSystemElement directory = ifHasDirectoryChange(directoryName);
                 if (directory != null)
                     currentDirectory = directory;
                 else
@@ -69,7 +69,7 @@ public class FileSystem implements Iterable<FileSystemElement> {
         currentDirectory = root;
     }
     
-    private FileSystemElement currentDirectoryContainsDirectory(String directoryName) {
+    private FileSystemElement ifHasDirectoryChange(String directoryName) {
         FileSystemElement directory = null;
         
         for (FileSystemElement element : currentDirectory) {
@@ -84,7 +84,7 @@ public class FileSystem implements Iterable<FileSystemElement> {
     }
     
     public void printCurrentDirectoryContents() {
-        currentDirectory.forEach(element -> System.out.println(element));
+        currentDirectory.forEach(System.out::println);
     }
 
     @Override
