@@ -4,20 +4,26 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Space {
-    private Position headPosition;
-    private Position tailPosition;
     private final Set<Position> positionsVisitedByHead;
     private final Set<Position> positionsVisitedByTail;
+    private final int numberOfKnots;
+    private final Position[] knots;
 
     public enum Direction {L, R, U, D}
 
-    public Space() {
+    public Space(int numberOfKnots) {
         positionsVisitedByHead = new HashSet<>();
         positionsVisitedByTail = new HashSet<>();
-        headPosition = new Position(0, 0);
-        tailPosition = headPosition;
+        Position headPosition = new Position(0, 0);
         positionsVisitedByHead.add(headPosition);
-        positionsVisitedByTail.add(tailPosition);
+        this.numberOfKnots = numberOfKnots;
+        knots = new Position[numberOfKnots];
+
+        for (int i = 0; i < numberOfKnots; i++) {
+            knots[i] = headPosition;
+        }
+
+        positionsVisitedByTail.add(knots[numberOfKnots - 1]);
     }
 
     public void move(Direction direction, int times) {
@@ -29,50 +35,53 @@ public class Space {
                 case D -> down();
             }
 
-            positionsVisitedByHead.add(headPosition);
+            positionsVisitedByHead.add(knots[0]);
 
-            if (tailMustMove()) {
-                moveTail();
-                positionsVisitedByTail.add(tailPosition);
+            for (int j = 1; j < numberOfKnots; j++) {
+                if (knotMustMove(j)) {
+                    moveKnot(j);
+                }
             }
+            positionsVisitedByTail.add(knots[numberOfKnots - 1]);
         }
     }
 
     private void left() {
-        headPosition = new Position(headPosition.x() - 1, headPosition.y());
+        knots[0] = new Position(knots[0].x() - 1, knots[0].y());
     }
 
     private void right() {
-        headPosition = new Position(headPosition.x() + 1, headPosition.y());
+        knots[0] = new Position(knots[0].x() + 1, knots[0].y());
     }
 
     private void up() {
-        headPosition = new Position(headPosition.x(), headPosition.y() + 1);
+        knots[0] = new Position(knots[0].x(), knots[0].y() + 1);
     }
 
     private void down() {
-        headPosition = new Position(headPosition.x(), headPosition.y() - 1);
+        knots[0] = new Position(knots[0].x(), knots[0].y() - 1);
     }
 
-    private boolean tailMustMove() {
-        return Math.abs(tailPosition.x() - headPosition.x()) > 1
-                || Math.abs(tailPosition.y() - headPosition.y()) > 1;
+    private boolean knotMustMove(int knotNumber) {
+        return Math.abs(knots[knotNumber].x() - knots[knotNumber - 1].x()) > 1
+                || Math.abs(knots[knotNumber].y() - knots[knotNumber - 1].y()) > 1;
     }
 
-    private void moveTail() {
-        if (headPosition.x() != tailPosition.x() && headPosition.y() != tailPosition.y()) {
-            int x = headPosition.x() - tailPosition.x();
-            int y = headPosition.y() - tailPosition.y();
-            tailPosition = new Position(tailPosition.x() + x / Math.abs(x),
-                    tailPosition.y() + y / Math.abs(y));
+    private void moveKnot(int knotNumber) {
+        if (knots[knotNumber - 1].x() != knots[knotNumber].x()
+                && knots[knotNumber - 1].y() != knots[knotNumber].y()) {
+            int x = knots[knotNumber - 1].x() - knots[knotNumber].x();
+            int y = knots[knotNumber - 1].y() - knots[knotNumber].y();
+            knots[knotNumber] = new Position(knots[knotNumber].x() + x / Math.abs(x),
+                    knots[knotNumber].y() + y / Math.abs(y));
         } else {
-            tailPosition = new Position(
-                    tailPosition.x() + (headPosition.x() - tailPosition.x())
-                            - (headPosition.x() == tailPosition.x() ? 0 : 1)
-                            * (headPosition.x() < tailPosition.x() ? -1 : 1),
-                    tailPosition.y() + (headPosition.y() - tailPosition.y())
-                            - (headPosition.y() == tailPosition.y() ? 0 : 1)
-                            * (headPosition.y() < tailPosition.y() ? -1 : 1));
+            knots[knotNumber] = new Position(
+                    knots[knotNumber].x() + (knots[knotNumber - 1].x() - knots[knotNumber].x())
+                            - (knots[knotNumber - 1].x() == knots[knotNumber].x() ? 0 : 1)
+                            * (knots[knotNumber - 1].x() < knots[knotNumber].x() ? -1 : 1),
+                    knots[knotNumber].y() + (knots[knotNumber - 1].y() - knots[knotNumber].y())
+                            - (knots[knotNumber - 1].y() == knots[knotNumber].y() ? 0 : 1)
+                            * (knots[knotNumber - 1].y() < knots[knotNumber].y() ? -1 : 1));
         }
     }
 
