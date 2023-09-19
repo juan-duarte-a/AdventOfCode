@@ -10,7 +10,11 @@ import java.io.FileNotFoundException;
 
 public class Day10 implements Day {
 
+    private final static int SCREEN_WIDTH = 40;
+    private final static int SCREEN_HEIGHT = 6;
     private String[] registerInstructions;
+    private StringBuilder screen;
+    private int characterPosition;
 
     @Override
     public void run() {
@@ -32,6 +36,16 @@ public class Day10 implements Day {
 
         System.out.println("Sum of the signal strengths of the 20th, 60th, 100th, 140th, 180th, and 220th cycles: " +
                 ConsoleColors.WHITE + sumSignalStrengths(cycles) + ConsoleColors.RESET);
+
+        NewDay.partText(2);
+
+        screen = new StringBuilder(SCREEN_HEIGHT * (SCREEN_WIDTH + 1));
+        characterPosition = 0;
+
+        startCycleIterations();
+
+        System.out.println("Screen results:\n");
+        System.out.println(screen.toString());
     }
 
     private int sumSignalStrengths(int[] cyclesToSum) {
@@ -62,6 +76,36 @@ public class Day10 implements Day {
         }
 
         return sum;
+    }
+
+    private void startCycleIterations() {
+        int x = 1;
+
+        for (String instruction : registerInstructions) {
+            String[] line = instruction.split(" ");
+
+            paintPixel(x);
+
+            if (line[0].equals("addx")) {
+                paintPixel(x);
+                x += Integer.parseInt(line[1]);
+            }
+        }
+    }
+
+    private void paintPixel(int x) {
+        if (characterPosition >= (x - 1) && characterPosition <= (x + 1)) {
+            screen.append('#');
+        } else {
+            screen.append('.');
+        }
+
+        if (characterPosition == SCREEN_WIDTH - 1) {
+            characterPosition = 0;
+            screen.append("\n");
+        } else {
+            characterPosition++;
+        }
     }
 
 }
